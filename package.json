@@ -1,5 +1,5 @@
 {
-  "name": "jwt-middleware",
+  "name": "cmpt474-mm-jwt-middleware",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/MentorMountain/jwt-middleware.git",
