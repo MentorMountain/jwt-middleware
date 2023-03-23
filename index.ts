@@ -1,1 +1,4 @@
-export {validateLoginToken} from "./src/verifyToken";
+export {
+  validateLoginToken,
+  LoginTokenParameters,
+} from "./src/verifyToken";
