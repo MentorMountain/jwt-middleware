@@ -1,1 +1,1 @@
-export { hi } from "./src/hi";
+export {validateLoginToken} from "./src/verifyToken";
