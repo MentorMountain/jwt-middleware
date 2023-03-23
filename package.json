@@ -1,0 +1,18 @@
+{
+  "name": "jwt-middleware",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/MentorMountain/jwt-middleware.git",
+  "author": "Kyle Saburao <ksaburao@sfu.ca>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@types/uuid": "^9.0.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "typescript": "^5.0.2",
+    "uuid": "^9.0.0"
+  }
+}
