@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jsonwebtoken from "jsonwebtoken";
+import { API_GATEWAY_AUTHORIZATION_HEADER } from "./google";
 
 interface LoginTokenParameters {
   JWT_SECRET: string;
@@ -7,8 +8,8 @@ interface LoginTokenParameters {
   WEBAPP_DOMAIN: string; // e.g. https://www.mentormountain.ca
 }
 
-function extractLoginToken(data: string) {
-  return "";
+function extractLoginToken(req: Request) {
+  return req.header(API_GATEWAY_AUTHORIZATION_HEADER);
 }
 
 function validateJWT(
@@ -20,7 +21,6 @@ function validateJWT(
   }
 
   try {
-    // jwt.verify throws an error if it is not valid
     jsonwebtoken.verify(jwt, JWT_SECRET, {
       audience: WEBAPP_DOMAIN,
       issuer: GATEWAY_DOMAIN,
@@ -36,24 +36,31 @@ function validateJWT(
 }
 
 function extractJWT(jwt: string) {
-  return {};
+  if (!jwt) {
+    throw new Error("JWT is empty");
+  }
+  const data = jsonwebtoken.decode(jwt);
+  return data;
 }
 
 function validateLoginToken(parameters: LoginTokenParameters) {
   return (req: Request, res: Response, next: NextFunction) => {
     // Extract JWT from authorization header
-    const token = extractLoginToken("");
-    const isValid = validateJWT(token, parameters);
+    const token = extractLoginToken(req);
+    if (token === undefined) {
+      return res.status(401).send("Missing login token");
+    }
 
+    const isValid = validateJWT(token, parameters);
     if (!isValid) {
       return res.status(401).send("Invalid login token");
     }
 
-    const {} = extractJWT(token);
+    const todo = extractJWT(token);
 
-    // req.todo = todo;
+    // req.todo = todo; // Append token data to request
 
-    next(); // Continue
+    next(); // Success
   };
 }
 

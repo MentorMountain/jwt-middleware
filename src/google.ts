@@ -1,0 +1,2 @@
+const API_GATEWAY_AUTHORIZATION_HEADER = "X-Forwarded-Authorization";
+export { API_GATEWAY_AUTHORIZATION_HEADER };
