@@ -3,6 +3,7 @@ import jsonwebtoken from "jsonwebtoken";
 import { API_GATEWAY_AUTHORIZATION_HEADER } from "./google";
 import { LoginParameters } from "./LoginParameters";
 import { LoginTokenParameters } from "./LoginTokenParameters";
+import { LoginTokenizedRequest } from "./LoginTokenizedRequest";
 
 function extractLoginToken(req: Request) {
   return req.header(API_GATEWAY_AUTHORIZATION_HEADER);
@@ -39,7 +40,7 @@ function extractJWT(jwt: string): LoginParameters {
 }
 
 function validateLoginToken(parameters: LoginTokenParameters) {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: LoginTokenizedRequest, res: Response, next: NextFunction) => {
     // Extract JWT from authorization header
     const token = extractLoginToken(req);
     if (token === undefined) {
@@ -51,11 +52,7 @@ function validateLoginToken(parameters: LoginTokenParameters) {
       return res.status(401).send("Invalid login token");
     }
 
-    const { computingID, courses, role } = extractJWT(token);
-
-    // req.computingID = computingID;
-    // req.todo = todo; // Append token data to request
-
+    req.user = extractJWT(token);
     next(); // Success
   };
 }
