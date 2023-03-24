@@ -1,12 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import jsonwebtoken from "jsonwebtoken";
 import { API_GATEWAY_AUTHORIZATION_HEADER } from "./google";
-
-interface LoginTokenParameters {
-  JWT_SECRET: string;
-  GATEWAY_DOMAIN: string; // e.g. https://google.google.google.com
-  WEBAPP_DOMAIN: string; // e.g. https://www.mentormountain.ca
-}
+import { LoginTokenParameters } from "./LoginTokenParameters";
+import { LoginParameters } from "./LoginParameters";
 
 function extractLoginToken(req: Request) {
   return req.header(API_GATEWAY_AUTHORIZATION_HEADER);
@@ -35,12 +31,11 @@ function validateJWT(
   }
 }
 
-function extractJWT(jwt: string) {
+function extractJWT(jwt: string): LoginParameters {
   if (!jwt) {
     throw new Error("JWT is empty");
   }
-  const data = jsonwebtoken.decode(jwt);
-  return data;
+  return jsonwebtoken.decode(jwt) as LoginParameters;
 }
 
 function validateLoginToken(parameters: LoginTokenParameters) {
@@ -56,8 +51,9 @@ function validateLoginToken(parameters: LoginTokenParameters) {
       return res.status(401).send("Invalid login token");
     }
 
-    const todo = extractJWT(token);
+    const { computingID, courses, role } = extractJWT(token);
 
+    // req.computingID = computingID;
     // req.todo = todo; // Append token data to request
 
     next(); // Success
