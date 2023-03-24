@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import jsonwebtoken from "jsonwebtoken";
 import { API_GATEWAY_AUTHORIZATION_HEADER } from "./google";
-import { LoginTokenParameters } from "./LoginTokenParameters";
 import { LoginParameters } from "./LoginParameters";
+import { LoginTokenParameters } from "./LoginTokenParameters";
 
 function extractLoginToken(req: Request) {
   return req.header(API_GATEWAY_AUTHORIZATION_HEADER);
@@ -60,4 +60,4 @@ function validateLoginToken(parameters: LoginTokenParameters) {
   };
 }
 
-export { validateLoginToken, LoginTokenParameters };
+export { validateLoginToken };
