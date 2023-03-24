@@ -6,10 +6,10 @@ import { LoginParameters } from "./LoginParameters";
 const expiry = "1h";
 
 function generateLoginToken(
-  { computingID, role }: LoginParameters,
+  login: LoginParameters,
   { GATEWAY_DOMAIN, JWT_SECRET, WEBAPP_DOMAIN }: LoginTokenParameters
 ) {
-  return jsonwebtoken.sign({ computingID, role }, JWT_SECRET, {
+  return jsonwebtoken.sign(login, JWT_SECRET, {
     audience: WEBAPP_DOMAIN,
     issuer: GATEWAY_DOMAIN,
     expiresIn: expiry,
