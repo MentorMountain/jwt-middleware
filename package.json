@@ -1,7 +1,7 @@
 {
   "name": "cmpt474-mm-jwt-middleware",
-  "version": "2.0.0",
-  "main": "index.js",
+  "version": "2.0.1",
+  "main": "./dist/index.js",
   "repository": "https://github.com/MentorMountain/jwt-middleware.git",
   "author": "Kyle Saburao <ksaburao@sfu.ca>",
   "license": "MIT",
