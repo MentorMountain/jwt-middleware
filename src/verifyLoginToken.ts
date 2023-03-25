@@ -40,7 +40,7 @@ function extractJWT(jwt: string): LoginParameters {
 }
 
 function validateLoginToken(parameters: LoginTokenParameters) {
-  return (req: LoginTokenizedRequest, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     // Extract JWT from authorization header
     const token = extractLoginToken(req);
     if (!token) {
@@ -51,7 +51,7 @@ function validateLoginToken(parameters: LoginTokenParameters) {
       return res.status(401).send("Invalid login token");
     }
 
-    req.user = extractJWT(token);
+    (req as LoginTokenizedRequest).user = extractJWT(token);
     next(); // Success
   };
 }
