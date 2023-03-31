@@ -5,3 +5,8 @@ export interface User {
   authHash: string;
   role: UserRole;
 }
+
+export interface UserToken {
+  username: string;
+  role: UserRole;
+}
