@@ -44,10 +44,12 @@ function validateLoginToken(parameters: LoginTokenParameters) {
     // Extract JWT from authorization header
     const token = extractLoginToken(req);
     if (!token) {
+      console.warn("AUTH: MISSING LOGIN TOKEN");
       return res.status(401).json({ error: "Missing login token" });
     }
 
     if (!validateJWT(token, parameters)) {
+      console.warn("AUTH: INVALID LOGIN TOKEN");
       return res.status(401).json({ error: "Invalid login token" });
     }
 
