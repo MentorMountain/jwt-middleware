@@ -1,4 +1,4 @@
 export interface LoginParameters {
-  computingID: string;
+  username: string;
   role: string;
 }
