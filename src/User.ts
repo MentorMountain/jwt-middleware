@@ -4,7 +4,8 @@ export interface User {
   username: string;
   authHash: string;
   role: UserRole;
-  lastConnectedIP: string;
+  lastLoginIP: string;
+  lastLoginTime: number;
 }
 
 export interface UserToken {
